@@ -1,0 +1,9 @@
+<%= turbo_frame_tag "recipe#{recipe.id}comments" do %>
+  <%= form_with url: comments_path, method: :recipe, data: {controller: "comments", action: "turbo:submit-end->comments#clear"} do |f| %>
+    <div class="card-footer d-flex justify-content-between bg-white">
+      <%= f.hidden_field :recipe_id, value: recipe.id %>
+      <%= f.text_area :comment_body, class: "w-75", placeholder: "Add a comment...", style:"border:none" %>
+      <%= f.submit "Post", class: "text-primary fw-bold", style: "background:none;border:none"  %>
+    </div>
+  <% end %>
+<% end %>

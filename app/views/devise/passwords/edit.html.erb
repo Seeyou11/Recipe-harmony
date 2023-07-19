@@ -1,0 +1,35 @@
+
+<div class="container home-sections mt-5 d-flex flex-row justify-content-center align-items-center">
+  <div class="login-section pt-3">
+    <div class="card text-center pt-5" style="width: 23rem;">
+      <h5 style="color: grey;">Change your password</h5>
+      <%= render "layouts/flash_messages" %>
+      <i class="fas text-orange"><i class="fas fa-lg fa-lock"></i></i>
+      <div class="card-body">
+        <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+          <%= f.hidden_field :reset_password_token %>
+          <div class="mb-3 mt-4">
+            <%= f.password_field :password, autofocus: true, autocomplete: "new-password", class: "form-control", placeholder: "New password" %>
+          </div>
+          <div class="mb-3 mt-4">
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "Confirm new password" %>
+          </div>
+          <%= f.submit "Change my password", class:  "btn btn-orange w-100" %>
+        <% end %>
+        <div class="d-flex align-items-center mt-4">
+          <div class="line"></div>
+          <h2 class="line-text">OR</h2>
+          <div class="line"></div>
+        </div>
+        <div class="ui center aligned container">
+          <% if devise_mapping.registerable? && controller_name != 'registrations' %>
+            <%= link_to "Create new account", new_registration_path(resource_name), class: "fs-6  my-4 text-decoration-none" %><br />
+          <% end %>
+          <% if controller_name != 'sessions' %>
+            <%= link_to "Back to login", new_session_path(resource_name), class: "fs-6  my-4 text-decoration-none" %><br />
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

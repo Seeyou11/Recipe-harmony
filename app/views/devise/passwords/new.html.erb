@@ -1,0 +1,30 @@
+<div class="container home-sections mt-5 d-flex flex-row justify-content-center align-items-center">
+  <div class="login-section pt-3">
+    <div class="card text-center pt-5" style="width: 23rem;">
+      <h5 style="color: grey;">Enter your email and we'll send you a link to get back into your account.</h5>
+      <%= render "layouts/flash_messages" %>
+      <i class="fas text-orange"><i class="fas fa-lg fa-lock"></i></i>
+      <div class="card-body">
+        <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+          <div class="mb-3 mt-4">
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "Email" %>
+          </div>
+          <%= f.submit "Send me reset password ", class:  "btn btn-orange w-100" %>
+        <% end %>
+        <div class="d-flex align-items-center mt-4">
+          <div class="line"></div>
+          <h2 class="line-text">OR</h2>
+          <div class="line"></div>
+        </div>
+        <div class="ui center aligned container">
+          <% if devise_mapping.registerable? && controller_name != 'registrations' %>
+            <%= link_to "Create new account", new_registration_path(resource_name), class: "fs-6  my-4 text-decoration-none" %><br />
+          <% end %>
+          <% if controller_name != 'sessions' %>
+            <%= link_to "Back to login", new_session_path(resource_name), class: "fs-6  my-4 text-decoration-none" %><br />
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

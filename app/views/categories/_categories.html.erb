@@ -1,0 +1,19 @@
+<%# turbo_frame_tag "categories" do %>
+  <% @categories.each do |category| %>
+    <tr>
+      <th>
+        <%= link_to category do %>
+          <%= link_to category.name, category_path(category), class: "badge rounded-pill text-bg-warning", style: "text-decoration: none;" %>
+        <% end %>
+      </th>
+      <td><%= pluralize(category.recipes.count, "recipes")  %></td>
+      <% if can? :manage, Category %>
+        <td>
+          <%= button_to  category,method: :delete, data: { turbo_confirm: "Are you sure you want to delete this category?" }, class: "btn btn-light" do %>
+            <i class="fas fa-trash text-danger"></i>
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+<%# end %>

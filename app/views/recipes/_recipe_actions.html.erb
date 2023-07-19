@@ -1,0 +1,41 @@
+<%= turbo_frame_tag "recipe#{recipe.id}actions" do %>
+  <div class="d-flex justify-content-start align-items-center gap-1 mb-0">
+    <%= button_to toggle_like_path(recipe_id: recipe.id), method: :recipe, style: "border:none; background:none", id: "recipe#{recipe.id}actions-likeBtn" do %>
+      <i class="<%= recipe.likes.find_by(user: current_user) ? "fa-solid color-red" : "fa-regular" %> fa-heart fa-xl"></i>
+    <% end %>
+    <a href="#" data-bs-toggle="modal" data-bs-target="#recipe<%= recipe.id %>_commentsModal" style="text-decoration:none" >
+      <i class="fa-regular fa-comment fa-xl fa-flip-horizontal text-dark"> </i>
+    </a> 
+    <%# if can? :toggle_favorite, recipe %>
+      <%# render "recipes/recipe_favorites", recipe: recipe %>
+    <%# end %>
+    <% if current_user != recipe.user %>
+      <%= render "recipes/recipe_favorites", recipe: recipe %>
+    <% end %>
+
+  </div>
+  <a href="#" data-bs-toggle="modal" data-bs-target="#recipe<%= recipe.id %>_likesModal" style="text-decoration:none" class="text-dark">
+    <small class="fw-bold my-1"><%= pluralize(recipe.likes.count, "like") %> </small>
+  </a>
+
+  <!-- Modal -->
+  <div class="modal fade" id="recipe<%= recipe.id %>_likesModal" tabindex="-1" aria-labelledby="recipe<%= recipe.id %>_likesModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="recipe<%= recipe.id %>_likesModalLabel">Recipe Likes</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex flex-column gap-3" >
+            <% recipe.likers.each do |liker| %>
+              <%= render "recipes/liker", liker: liker %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+

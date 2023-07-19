@@ -1,0 +1,18 @@
+<%= render "layouts/flash_messages" %>
+<div class="container-fluid" style="width: 75rem; margin-top: 6rem;">
+  <table class="table">
+    <thead class="table-dark ">
+      <tr>
+        <th scope="col">Category Name</th>
+        <th scope="col">Recipes</th>
+        <% if can? :manage, Category %>
+          <th scope="col">Action</th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+ 
+      <%= render "categories/categories", categories: @categories %>
+    </tbody>
+  </table>
+</div>

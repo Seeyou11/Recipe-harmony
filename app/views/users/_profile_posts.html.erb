@@ -1,0 +1,66 @@
+<div class="container d-flex flex-column">
+  <ul class="nav nav-tabs d-flex justify-content-center align-items-center" id="myTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#content1" type="button" role="tab" aria-controls="content1" aria-selected="true">
+        <div class="w-content ">
+          <i class="fa-solid fa-table-cells"> </i>
+          <small>POSTS</small>
+        </div>
+      </button>
+    </li>
+    <% if current_user == user %>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="tab2" data-bs-toggle="tab" data-bs-target="#content2" type="button" role="tab" aria-controls="content2" aria-selected="false">
+        <div class="w-content">
+          <i class="fa-solid fa-star"> </i>
+          <small>FAVORITES</small>
+        </div>
+      </button>
+    </li>
+    <% end %>
+  </ul>
+  <div class="tab-content row justify-content-center align-items-center" id="myTabContent">
+    <div class="tab-pane fade show active" id="content1" role="tabpanel" aria-labelledby="tab1">
+      <div class="row">
+        <% user.recipes.each do |recipe| %>
+          <div class="col-lg-4 col-md-6 col-sm-12 p-3 mb-4 profile-post" style="height:20rem;position:relative">
+            <%= link_to recipe do %>
+              <%= image_tag recipe.images.first, class: "img-thumbnail", style: "width:100%;height:20rem;object-fit:cover" %>
+              <div class="d-flex align-items-center justify-content-center gap-1 w-100 profile-post-likes">
+                <i class="fa-solid fa-heart fa-xl text-white"> </i>
+                <small class="text-white fw-bold"><%= recipe.likes.count %> </small>
+                <i class="fa-solid fa-comment fa-xl fa-flip-horizontal text-white"> </i>
+                <small class="text-white fw-bold"><%= recipe.comments.count %> </small>
+              </div>
+              <% if recipe.images.count > 1 %>
+                <i class="fa-solid fa-images text-white multiple-images"> </i>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="tab-pane fade show" id="content2" role="tabpanel" aria-labelledby="tab2">
+      <div class="row">
+        <% @recipes.each do |recipe| %>
+          <% if recipe.favorites.exists?(user: user) || recipe.likes.exists?(user: user) %>
+            <div class="col-lg-4 col-md-6 col-sm-12 p-3 mb-4 profile-post" style="height:20rem;position:relative">
+              <%= link_to recipe do %>
+                <%= image_tag recipe.images.first, class: "img-thumbnail", style: "width:100%;height:20rem;object-fit:cover" %>
+                <div class="d-flex align-items-center justify-content-center gap-1 w-100 profile-post-likes">
+                  <i class="fa-solid fa-heart fa-xl text-white"> </i>
+                  <small class="text-white fw-bold"><%= recipe.likes.count %> </small>
+                  <i class="fa-solid fa-comment fa-xl fa-flip-horizontal text-white"> </i>
+                  <small class="text-white fw-bold"><%= recipe.comments.count %> </small>
+                </div>
+                <% if recipe.images.count > 1 %>
+                  <i class="fa-solid fa-images text-white multiple-images"> </i>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

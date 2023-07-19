@@ -1,0 +1,33 @@
+<% if notice && notice.is_a?(Array) %>
+  <% notice.each do |n| %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <%= n %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
+<% elsif notice && notice.is_a?(String) %>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <%= notice %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% end %>
+
+
+<% if alert && alert.is_a?(Array) %>
+  <% alert.each do |a| %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <%= a %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
+<% elsif alert && alert.is_a?(String) %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <%= alert %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% end %>
+
+
+
+
+

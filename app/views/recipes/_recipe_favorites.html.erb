@@ -1,0 +1,7 @@
+<%= turbo_frame_tag "recipe#{recipe.id}favorites" do %>
+  <div class="d-flex justify-content-start align-items-center gap-1 mb-3 mt-3">
+    <%= button_to toggle_favorites_path(recipe_id: recipe.id), method: :recipe, style: "border:none; background:none", id: "recipe#{recipe.id}actions-favoriteBtn" do %>
+      <i class="<%= recipe.favorites.find_by(user: current_user) ? 'fas text-orange' : 'far' %> fa-star fa-xl"></i>
+    <% end %>
+  </div>
+<% end %>
