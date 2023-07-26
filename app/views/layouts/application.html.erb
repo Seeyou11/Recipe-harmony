@@ -11,6 +11,7 @@
   <body>
     <% if current_user %>
       <%= render 'layouts/navbar' %>
+      <%= render "layouts/flash_messages" %>
     <% end %>
     <%= yield %>
   </body>

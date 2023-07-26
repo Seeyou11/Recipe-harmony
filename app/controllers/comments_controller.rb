@@ -1,6 +1,5 @@
 class CommentsController < ApplicationController
   before_action :set_recipe, only: [:create]
-  
 
   def create 
     @comment = @recipe.comments.create(user: current_user, body: params[:comment_body])

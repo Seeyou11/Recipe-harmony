@@ -1,11 +1,11 @@
 <%= turbo_frame_tag "switch#{user.id}role" do %>
-  <% if user.role != 'admin' %>
+  <%# if user.role != 'admin' %>
     <%= link_to switch_role_user_path(user),  method: :get, title: "Switch to Normal User" do %>
       <i class="fas fa-exchange-alt"></i>
     <% end %>
- <% else %>
+ <%# else %>
   <%= link_to switch_role_user_path(user),  method: :get, title: "Switch to Admin User" do %>
     <i class="fas fa-exchange-alt"></i>
   <% end %>
- <% end %>
+ <%# end %>
 <% end %>

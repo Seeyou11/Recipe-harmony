@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_18_092409) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_25_062522) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -71,7 +71,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_18_092409) do
   create_table "follows", force: :cascade do |t|
     t.integer "follower_id"
     t.integer "followed_id"
-    t.boolean "accepted", default: true
+    t.boolean "accepted"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["followed_id"], name: "index_follows_on_followed_id"
@@ -89,6 +89,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_18_092409) do
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
+  create_table "permissions", force: :cascade do |t|
+    t.string "subject_class"
+    t.string "action"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "permissions_roles", force: :cascade do |t|
+    t.integer "permission_id"
+    t.integer "role_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["permission_id"], name: "index_permissions_roles_on_permission_id"
+    t.index ["role_id"], name: "index_permissions_roles_on_role_id"
+  end
+
   create_table "recipes", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -101,6 +117,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_18_092409) do
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_recipes_on_category_id"
     t.index ["user_id"], name: "index_recipes_on_user_id"
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "roles_users", id: false, force: :cascade do |t|
+    t.integer "role_id", null: false
+    t.integer "user_id", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -116,9 +143,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_18_092409) do
     t.datetime "updated_at", null: false
     t.text "bio"
     t.boolean "private", default: false
-    t.integer "role", default: 0
+    t.integer "role_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["role_id"], name: "index_users_on_role_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -130,6 +158,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_18_092409) do
   add_foreign_key "favorites", "users"
   add_foreign_key "likes", "recipes"
   add_foreign_key "likes", "users"
+  add_foreign_key "permissions_roles", "permissions"
+  add_foreign_key "permissions_roles", "roles"
   add_foreign_key "recipes", "categories"
   add_foreign_key "recipes", "users"
+  add_foreign_key "users", "roles"
 end

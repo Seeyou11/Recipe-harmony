@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row mt-5 mb-2">
+    <%# <div class="col">
+      <h1>Roles</h1>
+    </div> %>
+    <div class="col text-end">
+      <%= link_to "New role", new_role_path, class: "btn btn-warning" %>
+    </div>
+  </div>
+  <table class="table table-bordered table-hover">
+    <thead class="table-dark ">
+      <tr>
+        <th scope="col">Role Name</th>
+        <th scope="col">Users Found</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @roles.each do |role| %>
+        <tr>
+          <td><%= link_to role.name, role_path(role) %></td>
+          <td><%= role.users.count %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

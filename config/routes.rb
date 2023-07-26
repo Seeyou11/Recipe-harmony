@@ -6,7 +6,16 @@ Rails.application.routes.draw do
     get '/users/:id/switch_role', to: 'users#switch_role' 
    delete 'users/:id', to: 'users#destroy' or resources :users, only: [:destroy]  
    
+    resources :users, only: [:destroy] do
+    member do
+      get :assign_roles
+      patch :update_roles
+    end
+  end
+  
   root "home#index"
+  
+  resources :roles
 
   post "toggle_like", to:  "likes#toggle_like", as: :toggle_like
   post "toggle_favorite", to:  "favorites#toggle_favorite", as: :toggle_favorites

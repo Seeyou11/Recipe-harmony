@@ -1,0 +1,42 @@
+<div class="container">
+  <h1 class=" text-center mt-3 mb-4">Create New Role</h1>
+  <%= form_with(model: role) do |form| %>
+    <% if role.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(role.errors.count, "error") %> prohibited this role from being saved:</h2>
+        <ul>
+          <% role.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="my-3">
+      <%= form.text_field :name, placeholder: "Role name...", class: "form-control" %>
+    </div>
+    <div class="accordion">
+      <% grouped_permissions = Permission.all.group_by(&:subject_class) %>
+      <% grouped_permissions.each do |subject_class, permissions| %>
+        <div class="accordion-item">
+          <div class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= subject_class %>">
+            <%= subject_class.titleize %>
+          </div>
+          <div id="collapse<%= subject_class %>" class="accordion-body collapse">
+            <% permissions.each do |permission| %>
+              <%= form.check_box :permission_ids, { multiple: true }, permission.id, nil %>
+              <%= form.label "permission_ids_#{permission.id}", permission.action.capitalize %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="d-flex justify-content-between mt-4">
+        <%= form.submit "Create Role", class: "btn btn-orange" %>
+      <div class="modal-footer">
+        <%= link_to roles_path, class: "btn btn-primary" do %>
+          <i class="fa fa-arrow-left me-2"></i> Back to roles
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

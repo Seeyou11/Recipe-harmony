@@ -22,12 +22,18 @@
               ...
             </a>
             <ul class="dropdown-menu">
-             <li>
-                <%= link_to '#', class: 'dropdown-item', data: { bs_toggle: 'modal', bs_target: '#staticBackdrop' } do %>
-                  Edit recipe
-                <% end %>
-              </li>
-              <li><%= button_to 'Delete recipe', recipe, method: :delete, class:"dropdown-item" %></li>
+              <% if can? :edit, recipe %>
+                <li>
+                  <%= link_to '#', class: 'dropdown-item', data: { bs_toggle: 'modal', bs_target: '#staticBackdrop' } do %>
+                    Edit recipe
+                  <% end %>
+                </li>
+              <% end %>
+              <% if can? :destroy, recipe %>
+                <li>
+                  <%= button_to 'Delete recipe', recipe, method: :delete, class: "dropdown-item" %>
+                </li>
+              <% end %>
             </ul>
           </div>
         </div>

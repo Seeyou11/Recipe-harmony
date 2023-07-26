@@ -8,7 +8,8 @@ class User < ApplicationRecord
   has_many :recipes, dependent: :destroy
   has_many :categories, dependent: :destroy
   has_one_attached :profile_pic, dependent: :destroy
-  enum role: { normal: 0, admin: 1 }
+ 
+  has_and_belongs_to_many :roles, join_table: :roles_users
 
   has_many :likes, dependent: :destroy
   has_many :comments, dependent: :destroy
@@ -33,7 +34,9 @@ class User < ApplicationRecord
   #   # self = me
   #   Follow.create(follower: self, followed: user)
   # end
-    after_create :follow_all_users, if: :admin?
+
+  after_create :follow_all_users
+  # after_create :follow_all_users, if: :admin?
 
 
   def follow(user)
@@ -58,11 +61,22 @@ class User < ApplicationRecord
     end
   end
 
+  # def follow_all_users
+  #   if self.admin
+  #     User.where.not(id: self.id).each do |user|
+  #       follow(user)
+  #     end
+  #   end
+  # end
   def follow_all_users
-    if self.admin
+    if super_admin?
       User.where.not(id: self.id).each do |user|
         follow(user)
       end
     end
+  end
+
+   def super_admin?
+    roles.exists?(name: 'Super Admin')
   end
 end
