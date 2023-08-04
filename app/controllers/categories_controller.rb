@@ -3,6 +3,8 @@ class CategoriesController < ApplicationController
   load_and_authorize_resource
 
   def index
+    @categories = Category.all
+    @category = Category.new
   end
 
   def show
@@ -15,28 +17,6 @@ class CategoriesController < ApplicationController
 
   def edit
   end
-
-  #   def create
-  #   @category = current_user.categories.new(category_params)
-
-  #   respond_to do |format|
-  #     if @category.save
-  #       format.turbo_stream do
-  #         render turbo_stream: [
-  #           turbo_stream.update('new_category',
-  #                               partial: 'categories/form',
-  #                               locals: { category: @category }),
-  #           turbo_stream.prepend('categories',
-  #                                partial: 'categories/categories',
-  #                                locals: { category: @category })
-  #         ]
-  #       end
-  #       format.html { redirect_to categories_url, notice: 'Category was successfully created.' }
-  #     else
-  #       format.html { redirect_to root_url, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
 
   def create
     @category = current_user.categories.new(category_params)
@@ -54,7 +34,7 @@ class CategoriesController < ApplicationController
   def update
     respond_to do |format|
       if @category.update(category_params)
-        format.html { redirect_to category_url(@category), notice: "Category was successfully updated." }
+        format.html { redirect_to categories_url, notice: "Category was successfully updated." }
         format.json { render :show, status: :ok, location: @category }
       else
         format.html { render :edit, status: :unprocessable_entity }

@@ -19,21 +19,6 @@ class UsersController < ApplicationController
   def show
     @recipes = Recipe.all
   end
-
-  # def switch_role
-  #   @user = User.find(params[:id])
-  #   @user.toggle_role
-  #   # redirect_to users_path, notice: "Role switched successfully." 
-  #   respond_to do |format|
-  #     format.turbo_stream do
-  #       render turbo_stream: turbo_stream.replace(
-  #              "switch#{@user.id}role",
-  #               partial: "users/switch_role", 
-  #               locals: { user: @user })
-  #     end
-  #   # format.html { redirect_to users_path, notice: "Role switched successfully." }
-  #   end
-  # end
   
   def destroy
     @user.destroy

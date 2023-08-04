@@ -1,9 +1,10 @@
 <div class="container home-sections mt-5 d-flex flex-row justify-content-center align-items-center">
   <div class="login-section pt-3">
     <div class="card text-center pt-5" style="width: 23rem;">
-      <h1 class="recipe-harmony">Recipe Harmony</h1>
+      <div class="navicon-container1">
+        <h3 class="navicons"><i class="fas fa-utensils icon-spoon"></i>Recipe Harmony</h3>
+      </div>
       <%= render "layouts/flash_messages" %>
-      <i class="fas text-orange"><i class="fas fa-lg fa-utensils"></i></i>
       <div class="card-body">
         <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
           <div class="mb-3 mt-4">

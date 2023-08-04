@@ -1,7 +1,7 @@
 <!-- Modal -->
-<div class="modal fade modal-lg" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade modal-lg" id="staticBackdrop<%= recipe.id %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <%= form_with(model: recipe) do |form| %>
+    <%= form_with(model: recipe, url: recipe.persisted? ? recipe_path(recipe) : recipes_path) do |form| %>
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="staticBackdropLabel">Create New Recipe</h5>
@@ -9,10 +9,8 @@
         </div>
         <div class="modal-body">
           <div class="d-flex">
-
             <div class="border-end border-secondary mx-2 px-2" style="width: 50%;">
-               <%= render "layouts/shared/errors" , obj: @recipe%>
-
+              <%= render "layouts/shared/errors" , obj: @recipe%>
               <div class="my-2">
                 <% if current_user.profile_pic.attached? %>
                   <%= image_tag current_user.profile_pic, class: "img-thumbnail rounded-circle", style: "width: 10%" %>
@@ -50,11 +48,9 @@
                 </div>
               </div>
             </div>
-                      
             <div  style="width: 50%;">
               <%= form.file_field :images, multiple: true, id: "recipe-images", required: true %>
             </div>
-
           </div>
         </div>
         <div class="modal-footer">

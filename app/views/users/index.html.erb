@@ -1,5 +1,5 @@
-<div class="container-fluid" style="width: 75rem; margin-top: 6rem;">
-  <table class="table">
+<div class="container" style="width: 75rem; margin-top: 6rem;">
+  <table class="table table-bordered table-hover">
     <thead class="table-dark">
       <tr>
         <th>User Name</th>
@@ -33,7 +33,6 @@
             <% end %>
           </td>
           <td>
-            <%# render 'users/switch_role', user: user %>
             <%= link_to assign_roles_user_path(user), method: :patch do %>
               <i class="fas fa-user-cog text-primary"></i>
             <% end %>

@@ -4,6 +4,9 @@ class RecipesController < ApplicationController
 
   def index
     redirect_to root_path
+    @recipe = Recipe.new
+    # @recipes = Recipe.all
+    @categories = Category.all
   end
 
   def show
@@ -14,6 +17,7 @@ class RecipesController < ApplicationController
   end
 
   def edit
+    @categories = Category.all
   end
 
   def create
@@ -33,10 +37,10 @@ class RecipesController < ApplicationController
   def update
     respond_to do |format|
       if @recipe.update(recipe_params)
-        format.html { redirect_to recipe_url(@recipe), notice: 'Recipe was successfully updated.' }
+        format.html { redirect_to root_path, notice: 'Recipe was successfully updated.' }
         format.json { render :show, status: :ok, location: @recipe }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { redirect_to root_path, status: :unprocessable_entity, alert: @recipe.errors.full_messages }
         format.json { render json: @recipe.errors, status: :unprocessable_entity }
       end
     end

@@ -1,21 +1,18 @@
-<!-- Modal -->
-<%# turbo_frame_tag "new_category", src: new_category_path, target: "_top" %>
-<div class="modal fade modal-lg" id="staticBackdropcat" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade modal-lg" id="staticBackdropEdit<%= category.id %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <%= form_with(model: category) do |form| %>
-      <%# render "layouts/flash_messages" %>
+    <%= form_with(model: category, local: true) do |form| %>
       <div class="modal-content" style="width: 70%; margin-left: 20%;">
         <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Create New Category</h5>
+          <h5 class="modal-title" id="staticBackdropLabel">Edit Category</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div>
-            <% if category.errors.any? %>
+            <% if @category.errors.any? %>
               <div style="color: red;">
-                <h2><%= pluralize(category.errors.count, "error") %> prohibited this category from being saved:</h2>
+                <h2><%= pluralize(@category.errors.count, "error") %> prohibited this category from being saved:</h2>
                 <ul>
-                  <% category.errors.each do |error| %>
+                  <% @category.errors.each do |error| %>
                     <li><%= error.full_message %></li>
                   <% end %>
                 </ul>
@@ -38,10 +35,9 @@
           </div>
         </div>
         <div class="modal-footer">
-          <%= form.submit "Create category", class: "btn btn-orange" %>
+          <%= form.submit "Update category", class: "btn btn-orange" %>
         </div>
       </div>
     <% end %>
   </div>
 </div>
-

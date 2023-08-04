@@ -1,7 +1,9 @@
-<nav class="navbar navbar-expand-lg bg-light sticky-top bg-white border-bottom" style="border-color: #afafaf">
+<nav class="navbar  navbar-expand-lg bg-light sticky-top bg-white border-bottom" style="border-color: #afafaf">
   <div class="container-fluid w-75">
     <%= link_to root_path, class:"navbar-brand" do %>
-      <h3 class="recipe-harmony">Recipe Harmony</h3>
+     <div class="navicon-container">
+      <h3 class="navicon"><i class="fas fa-utensils icon-spoon"></i>Recipe Harmony</h3>
+      </div>
     <% end %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -17,83 +19,78 @@
               <%= render 'layouts/search_results', users: [] %>
             </ul>
           </div>
+        <% end %>
+      </div>
+      <div class="navbar-collapse gap-3">
+        <%=  link_to root_path, class: "text-dark" do %>
+          <i class="fa-solid fa-house fa-xl"></i>
+        <% end %>
+        <% if can? :manage, User %>
+          <%=  link_to categories_path, class: "text-dark" , title: "Category list" do %>
+            <i class="fas fa-list-ul fa-xl"></i>
           <% end %>
-        </div>
-        <div class="navbar-collapse gap-4">
-          <%=  link_to root_path, class: "text-dark" do %>
-            <i class="fa-solid fa-house fa-xl"></i>
+          <%= link_to roles_path, class: "navbar-brand" , title: "Role list" do %>
+            <i class="fas fa-user-cog fa-lg"></i>
           <% end %>
+          <%= link_to users_path, class: "navbar-brand" , title: "User list" do %>
+            <i class="fas fa-users fa-lg"></i>
+          <% end %>
+        <% else %>
           <a type="button" class="text-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
             <i class="fa-regular fa-square-plus fa-xl"></i>
           </a>
-          <% if can? :manage, User %>
-            <%=  link_to categories_path, class: "text-dark" , title: "Category list" do %>
-              <i class="fas fa-list-ul fa-xl"></i>
-            <% end %>
-            <%= link_to roles_path, class: "navbar-brand" , title: "Role list" do %>
-              <i class="fas fa-user-cog fa-lg"></i>
-            <% end %>
-            <%= link_to users_path, class: "navbar-brand" , title: "User list" do %>
-              <i class="fas fa-users fa-lg"></i>
-            <% end %>
-          <% else %>
-            <div class="dropstart">
-              <i class="fa-regular fa-heart fa-xl" data-bs-toggle="dropdown" aria-expanded="false"></i>
-              <ul class="dropdown-menu p-4">
-                <% current_user.follow_requests.each do |fr| %>
-                  <li>
-                    <div class="d-flex justify-content-between">
-                      <div class="d-flex">
-                        <%= image_tag fr.follower.profile_pic.attached? ? fr.follower.profile_pic : 'user-pp.png', class: "img-thumbnail rounded-circle", style: "width: 2.5rem" %>
-                        <div class="d-flex flex-column mx-3 justify-content-center">
-                          <small class="fw-bold" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;max-width:5rem">
-                            <%= link_to fr.follower, class: "a-decoration-none" do %>
-                              <%= fr.follower.username %>
-                            <% end %>
-                          </small>
-                        </div>
-                      </div>
-                      <div class="d-flex flex-row align-items-center justify-content-between", style="width: 10.5rem">
-                        <%= button_to accept_follow_path(follow_id: fr.id), method: :post, class: "btn btn-primary", style: "text-decoration:none" do %>
-                          <small class="fw-bold text-white">Accept</small>
-                        <% end %>
-                        <%= button_to decline_follow_path(follow_id: fr.id), method: :delete, class: "btn btn-danger", style: "text-decoration:none" do %>
-                          <small class="fw-bold text-white">Decline</small>
-                        <% end %>
+          <div class="dropstart">
+            <i class="fa-regular fa-heart fa-xl" data-bs-toggle="dropdown" aria-expanded="false"></i>
+            <ul class="dropdown-menu p-4">
+              <% current_user.follow_requests.each do |fr| %>
+                <li>
+                  <div class="d-flex justify-content-between">
+                    <div class="d-flex">
+                      <%= image_tag fr.follower.profile_pic.attached? ? fr.follower.profile_pic : 'user-pp.png', class: "img-thumbnail rounded-circle", style: "width: 2.5rem" %>
+                      <div class="d-flex flex-column mx-3 justify-content-center">
+                        <small class="fw-bold" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;max-width:5rem">
+                          <%= link_to fr.follower, class: "a-decoration-none" do %>
+                            <%= fr.follower.username %>
+                          <% end %>
+                        </small>
                       </div>
                     </div>
-                  </li>
-                <% end %>
-              </ul>
-            </div>
-          <% end %>
-          <div class="dropdown">
-            <a class="" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <% if current_user && current_user.profile_pic.attached? %>
-                <%= image_tag current_user.profile_pic, class: "img-thumbnail rounded-circle", style: "width: 2rem" %>
-              <% else %>
-                <%= image_tag 'user-pp.png', class: "img-thumbnail rounded-circle", style: "width: 2rem" %>
+                    <div class="d-flex flex-row align-items-center justify-content-between", style="width: 10.5rem">
+                      <%= button_to accept_follow_path(follow_id: fr.id), method: :post, class: "btn btn-primary", style: "text-decoration:none" do %>
+                        <small class="fw-bold text-white">Accept</small>
+                      <% end %>
+                      <%= button_to decline_follow_path(follow_id: fr.id), method: :delete, class: "btn btn-danger", style: "text-decoration:none" do %>
+                        <small class="fw-bold text-white">Decline</small>
+                      <% end %>
+                    </div>
+                  </div>
+                </li>
               <% end %>
-            </a>
-            <ul class="dropdown-menu">
-              <li>
-                <%= link_to 'Profile', user_path(current_user), class: "dropdown-item" %>
-              </li>
-              <li>
-                <%= link_to 'Settings', edit_user_registration_path, class: "dropdown-item" %>
-              </li>
-              <li>
-                <%= button_to 'Log out', destroy_user_session_path, class: "dropdown-item", method: :delete%>
-              </li>
             </ul>
           </div>
+        <% end %>
+        <div class="dropdown">
+          <a class="" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <% if current_user && current_user.profile_pic.attached? %>
+              <%= image_tag current_user.profile_pic, class: "img-thumbnail rounded-circle", style: "width: 2.5rem" %>
+            <% else %>
+              <%= image_tag 'user-pp.png', class: "img-thumbnail rounded-circle", style: "width: 2.5rem" %>
+            <% end %>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <%= link_to 'Profile', user_path(current_user), class: "dropdown-item" %>
+            </li>
+            <li>
+              <%= link_to 'Settings', edit_user_registration_path, class: "dropdown-item" %>
+            </li>
+            <li>
+              <%= button_to 'Log out', destroy_user_session_path, class: "dropdown-item", method: :delete%>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
-  </nav>
-  
-  <% if can? :manage, Recipe %>
-    <%= render 'categories/form', category: Category.new %>
-  <% else %>
-    <%= render 'recipes/form', recipe: Recipe.new %>
-  <% end %>
+  </div>
+</nav>
+<%= render 'recipes/form', recipe: Recipe.new%>

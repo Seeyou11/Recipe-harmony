@@ -24,7 +24,7 @@
             <ul class="dropdown-menu">
               <% if can? :edit, recipe %>
                 <li>
-                  <%= link_to '#', class: 'dropdown-item', data: { bs_toggle: 'modal', bs_target: '#staticBackdrop' } do %>
+                  <%= link_to '#', class: 'dropdown-item', data: { bs_toggle: 'modal', bs_target: "#staticBackdropEdit" } do %>
                     Edit recipe
                   <% end %>
                 </li>
@@ -78,7 +78,7 @@
     <%= render "recipes/comment_post", recipe: recipe %>
   </div>
 </div>
-
-<% render partial: 'recipes/form', locals: { recipe: @recipe } %>
-
-
+<% if can? :update, Recipe %>
+  <%# render partial: 'recipes/form', locals: { recipe: recipe } %>
+  <%= render partial: 'recipes/edit_form', locals: { recipe: recipe } %>
+<% end %>

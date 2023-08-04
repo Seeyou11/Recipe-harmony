@@ -118,26 +118,82 @@ body {
 }
 
 .text-orange {
-  color: orange;
+  color: #ff9800;
 }
 
-.recipe-harmony {
-  font-style: italic;
-  font-size: 23px;
-  color: #5f5f5f;
+// .recipe-harmony {
+//   font-style: italic;
+//   font-size: 23px;
+//   color: #5f5f5f;
+// }
+
+// .recipe-harmony {
+//   font-style: italic;
+//   font-size: 23px;
+//   color: #ff9800;
+//   margin: 0;
+//   padding: 5px;
+//   // border: 2px solid #ff9800;
+//   // border-radius: 10px;
+//   // box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+//   transition: transform 0.3s ease;
+// }
+
+.navicon-container {
+  position: relative;
+  cursor: pointer;
+  padding: 5px;
 }
 
-  .truncate-text {
+.navicon-container1 {
+  position: relative;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.navicon {
+  font-size: 1.3rem;
+  color: #ff9800;
+  text-transform: uppercase;
+  margin: 0;
+  padding: 5px 25px 5px 25px;
+  border: 2px solid #ff9800;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.navicons {
+  font-size: 1.3rem;
+  color: #ff9800;
+  text-transform: uppercase;
+  margin: 0;
+  padding: 5px 0px 5px 0px;
+  border: 2px solid #ff9800;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  // transform: rotate(315deg);
+  // -webkit-transform: rotate(315deg) scale(0.8);
+}
+
+.icon-spoon{
+  padding-right: 5px;
+}
+
+.navicon-container:hover {
+  transform: scale(1.1);
+}
+
+.truncate-text {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
+}
 
 .decorated-heading {
   animation: fade-in 1s ease-in-out forwards;
   color: rgb(26, 26, 26);
 }
-
 

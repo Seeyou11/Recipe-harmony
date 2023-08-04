@@ -3,6 +3,11 @@ class HomeController < ApplicationController
   before_action :set_feeds
   
   def index
+    if params[:recipe_id].present?
+      @recipe = Recipe.find(params[:recipe_id])
+    else
+      @recipe = Recipe.new
+    end
   end
 
 

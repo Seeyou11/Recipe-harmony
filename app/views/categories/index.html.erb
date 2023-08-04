@@ -1,18 +1,50 @@
-<%= render "layouts/flash_messages" %>
-<div class="container-fluid" style="width: 75rem; margin-top: 6rem;">
-  <table class="table">
+<div class="container">
+  <div class="row mt-5 mb-2">
+    <div class="col">
+      <h3>Category list</h3>
+    </div>
+    <% if can? :manage, Category %>
+      <div class="col text-end" type="button" class="text-dark" data-bs-toggle="modal" data-bs-target="#staticBackdropcat">
+        <button class="btn btn-warning">New Category</button>
+      </div>
+    <% end %>
+  </div>
+  <table class="table table-bordered table-hover">
     <thead class="table-dark ">
       <tr>
         <th scope="col">Category Name</th>
         <th scope="col">Recipes</th>
         <% if can? :manage, Category %>
-          <th scope="col">Action</th>
+          <th>Action</th>
         <% end %>
       </tr>
     </thead>
     <tbody>
- 
-      <%= render "categories/categories", categories: @categories %>
+      <%# render "categories/categories", categories: @categories %>
+      <% @categories.each do |category| %>
+        <tr>
+          <th>
+            <%= link_to category do %>
+              <%= link_to category.name, category_path(category), class: "badge rounded-pill text-bg-warning", style: "text-decoration: none;" %>
+            <% end %>
+          </th>
+          <td><%= pluralize(category.recipes.count, "recipes")  %></td>
+          <% if can? :manage, Category %>
+            <td>
+              <div class="d-flex">
+                <%= link_to '#', class: 'me-2',  data: { bs_toggle: 'modal', bs_target: "#staticBackdropEdit#{category.id}" } do %>
+                  <i class="fas fa-edit text-primary"></i>
+                <% end %>
+                <%= link_to category_path(category), method: :delete, data: { "turbo-method": :delete, "turbo-confirm": "Are you sure you want to delete this category?" } do %>
+                  <i class="fas fa-trash text-danger"></i>
+                <% end %>
+              </div>
+            </td>
+          <% end %>
+        </tr>
+        <%= render partial: 'categories/edit_form', locals: { category: category } %>
+      <% end %>
     </tbody>
   </table>
 </div>
+<%= render 'categories/form', category: @category %>
